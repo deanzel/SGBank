@@ -39,5 +39,30 @@ namespace SGBank.Data
             List<Account> accounts = GetAllAccounts();
             return accounts.FirstOrDefault(a => a.AccountNumber == AccountNumber);
         }
+
+        public void UpdateAccount(Account accountToUpdate)
+        {
+            var accounts = GetAllAccounts();
+
+            var account = accounts.First(a => a.AccountNumber == accountToUpdate.AccountNumber);
+            account.Balance = accountToUpdate.Balance;
+
+            OverwriteFile(accounts);
+        }
+
+        public void OverwriteFile(List<Account> accounts)
+        {
+            File.Delete(_filePath);
+
+            using (var writer = File.CreateText(_filePath))
+            {
+                writer.WriteLine("AccountNumber,FirstName,LastName,Balance");
+
+                foreach (var account in accounts)
+                {
+                    writer.WriteLine("{0},{1},{2},{3}", account.AccountNumber, account.FirstName, account.LastName, account.Balance);
+                }
+            }
+        }
     }
 }

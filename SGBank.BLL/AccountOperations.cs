@@ -31,6 +31,34 @@ namespace SGBank.BLL
             return response;
         }
 
+        public Response Deposit(Account account, decimal Amount)
+        {
+            var response = new Response();
+
+            if (Amount > 0)
+            {
+                account.Balance += Amount;
+                var repo = new AccountRepository();
+                repo.UpdateAccount(account);
+
+                response.Success = true;
+                response.Message = "You have successfully made a deposit.";
+                response.DepositInfo = new DepositSlip();
+                response.DepositInfo.AccountNumber = account.AccountNumber;
+                response.DepositInfo.DepositAmount = Amount;
+                response.DepositInfo.NewBalance = account.Balance;
+
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "WTF You have to give a positive amount to deposit!";
+            }
+
+
+            return response;
+        }
+        
 
     }
 }

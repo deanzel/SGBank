@@ -11,5 +11,6 @@ namespace SGBank.Models
         public bool Success { get; set; }
         public string Message { get; set; }
         public Account AccountInfo { get; set; }
+        public DepositSlip DepositInfo { get; set; }
     }
 }
