@@ -45,11 +45,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkFlows\AccountMenu.cs" />
     <Compile Include="WorkFlows\DepositWorkFlow.cs" />
     <Compile Include="WorkFlows\LookupWorkflow.cs" />
     <Compile Include="WorkFlows\MainMenu.cs" />
-    <Compile Include="WorkFlows\Withdraw.cs" />
+    <Compile Include="WorkFlows\TransferWorkFlow.cs" />
+    <Compile Include="WorkFlows\WithdrawWorkFlow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

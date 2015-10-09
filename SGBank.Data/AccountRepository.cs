@@ -50,6 +50,17 @@ namespace SGBank.Data
             OverwriteFile(accounts);
         }
 
+        public void UpdateAccount(Account accountToUpdate1, Account accountToUpdate2)
+        {
+            var accounts = GetAllAccounts();
+
+            var account1 = accounts.First(a => a.AccountNumber == accountToUpdate1.AccountNumber);
+            account1.Balance = accountToUpdate1.Balance;
+
+            var account2 = accounts.First(a => a.AccountNumber == accountToUpdate2.AccountNumber);
+            account2.Balance = accountToUpdate2.Balance;
+        }
+
         public void OverwriteFile(List<Account> accounts)
         {
             File.Delete(_filePath);
@@ -64,5 +75,19 @@ namespace SGBank.Data
                 }
             }
         }
+
+        public void WriteNewLine(Account account)
+        {
+            var accounts = GetAllAccounts();
+            //int newAccountNo = accounts.Count + 1;
+            int newAccountNo = accounts.Max(a => a.AccountNumber) + 1;
+
+            using (var writer = File.AppendText(_filePath))
+            {
+                writer.WriteLine("{0},{1},{2},{3}", newAccountNo, account.FirstName, account.LastName, account.Balance);
+            }
+
+        }
+
     }
 }

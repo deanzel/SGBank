@@ -8,30 +8,29 @@ using SGBank.Models;
 
 namespace SGBank.UI.WorkFlows
 {
-    public class DepositWorkFlow
+    public class WithdrawWorkFlow
     {
         private Account _currentAccount;
 
         public void Execute(Account account)
         {
             _currentAccount = account;
-            decimal amount = GetDepositAmountFromUser();
-            MakeDeposit(amount);
+            decimal amount = GetWithdrawalAmountFromUser();
+            MakeWithdrawal(amount);
 
         }
 
-        public decimal GetDepositAmountFromUser()
+        public decimal GetWithdrawalAmountFromUser()
         {
             do
             {
-                //Console.Clear();
-                Console.WriteLine("Enter deposit amount: ");
+                Console.WriteLine("Enter withdrawal amount: ");
                 string input = Console.ReadLine();
 
-                decimal depositAmount;
-                if (decimal.TryParse(input, out depositAmount))
+                decimal withdrawalAmount;
+                if (decimal.TryParse(input, out withdrawalAmount))
                 {
-                    return depositAmount;
+                    return withdrawalAmount;
                 }
 
                 Console.WriteLine("That was not a valid amount...");
@@ -41,17 +40,17 @@ namespace SGBank.UI.WorkFlows
             } while (true);
         }
 
-        public void MakeDeposit(decimal Amount)
+        public void MakeWithdrawal(decimal Amount)
         {
             var ops = new AccountOperations();
-            var response = ops.Deposit(_currentAccount, Amount);
+            var response = ops.Withdraw(_currentAccount, Amount);
 
             if (response.Success)
             {
                 Console.WriteLine();
-                Console.WriteLine("Depositted {0:c} to account {1}.", response.DepositInfo.DepositAmount,
-                    response.DepositInfo.AccountNumber);
-                Console.WriteLine("New Balance: {0:c}", response.DepositInfo.NewBalance);
+                Console.WriteLine("Withdrawn {0:c} to account {1}.", response.WithdrawalInfo.WithdrawalAmount,
+                    response.WithdrawalInfo.AccountNumber);
+                Console.WriteLine("New Balance: {0:c}", response.WithdrawalInfo.NewBalance);
                 Console.WriteLine("Press Enter to continue...");
                 Console.ReadLine();
             }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SGBank.Models
 {
-    public class DepositSlip
+    public class WithdrawalSlip
     {
         public int AccountNumber { get; set; }
-        public decimal DepositAmount { get; set; }
+        public decimal WithdrawalAmount { get; set; }
         public decimal NewBalance { get; set; }
     }
 }

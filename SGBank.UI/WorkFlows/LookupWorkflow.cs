@@ -16,24 +16,9 @@ namespace SGBank.UI.WorkFlows
 
         public void Execute()
         {
-            //bool accountExists = false;
-
-            //int accountNum = VerifiedAccountNumber();
-
             int accountNumber = GetAccountNumberFromUser();
             DisplayAccountInformation(accountNumber);
 
-
-
-            ////Then continue to Account Menu of that specific account
-            //if (accountExists)
-            //{
-            //    Console.WriteLine();
-            //    Console.WriteLine("Press enter to continue to your SG Bank Account Menu...");
-            //    Console.ReadLine();
-            //    AccountMenu accountMenu = new AccountMenu();
-            //    accountMenu.Execute(accountNumber);
-            //}
 
         }
 
@@ -52,13 +37,13 @@ namespace SGBank.UI.WorkFlows
                 }
 
                 Console.WriteLine("That was not a valid account number...");
-                Console.WriteLine("Press enter to continue...");
+                Console.WriteLine("Press Enter to continue...");
                 Console.ReadLine();
 
             } while (true);
         }
 
-        public bool DisplayAccountInformation(int AccountNumber)
+        public void DisplayAccountInformation(int AccountNumber)
         {
             var ops = new AccountOperations();
             var response = ops.GetAccount(AccountNumber);
@@ -72,19 +57,18 @@ namespace SGBank.UI.WorkFlows
                 Console.ReadLine();
 
                 DisplayAccountMenu();
-                Console.ReadLine();
                 
-                return true;
+                
             }
             else
             {
                 Console.WriteLine("Error Occurred!!!");
                 Console.WriteLine(response.Message);
-                Console.WriteLine("Press enter to continue...");
+                Console.WriteLine("Press Enter to continue...");
                 Console.ReadLine();
-                return false;
+
             }
-            //return response.AccountInfo;
+
         }
 
         public void PrintAccountInformation(Account AccountInfo)
@@ -103,6 +87,8 @@ namespace SGBank.UI.WorkFlows
             do
             {
                 Console.Clear();
+                Console.WriteLine("Welcome {0} {1} to your SG Bank Account Menu!", _currentAccount.FirstName, _currentAccount.LastName);
+                Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("1. Deposit");
                 Console.WriteLine("2. Withdrawal");
                 Console.WriteLine("3. Transfer");
@@ -134,10 +120,16 @@ namespace SGBank.UI.WorkFlows
                     DisplayAccountMenu();
                     break;
                 case "2":
+                    var withdrawWF = new WithdrawWorkFlow();
+                    withdrawWF.Execute(_currentAccount);
+                    PrintAccountInformation(_currentAccount);
+                    DisplayAccountMenu();
+                    break;
                 case "3":
-                    Console.WriteLine("This feature is not implemented!");
-                    Console.WriteLine("Press Enter to continue...");
-                    Console.ReadLine();
+                    var transferWF = new TransferWorkFlow();
+                    transferWF.Execute(_currentAccount);
+                    PrintAccountInformation(_currentAccount);
+                    DisplayAccountMenu();
                     break;
                 default:
                     Console.WriteLine("Invalid Entry...");

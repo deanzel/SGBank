@@ -12,5 +12,7 @@ namespace SGBank.Models
         public string Message { get; set; }
         public Account AccountInfo { get; set; }
         public DepositSlip DepositInfo { get; set; }
+        public WithdrawalSlip WithdrawalInfo { get; set; }
+        public TransferSlip TransferInfo { get; set; }
     }
 }
