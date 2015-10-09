@@ -59,6 +59,8 @@ namespace SGBank.Data
 
             var account2 = accounts.First(a => a.AccountNumber == accountToUpdate2.AccountNumber);
             account2.Balance = accountToUpdate2.Balance;
+
+            OverwriteFile(accounts);
         }
 
         public void OverwriteFile(List<Account> accounts)
